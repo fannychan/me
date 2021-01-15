@@ -1,8 +1,12 @@
-import * as React from "react"
+import * as React from "react";
 import styled from "styled-components";
 import Avatar from "avataaars";
 import { SkillBlock } from "../components/SkillBlock";
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components";
+import Github from "../images/github.svg";
+import Email from "../images/email.svg";
+import Linkedin from "../images/linkedin.svg";
+import { Link, useStaticQuery, graphql } from "gatsby";
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -19,52 +23,23 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1rem;
     max-width: 600px;
   }
-`
-
-const WEB = <svg style={{height: '100px', width: '100px'}} height="424pt" width="424pt" viewBox="0 -25 424 424" xmlns="http://www.w3.org/2000/svg"><path d="m167.289062 272.132812c-1.601562 0-3.214843-.550781-4.53125-1.671874l-45.296874-38.570313c-1.5625-1.332031-2.460938-3.277344-2.460938-5.332031 0-2.050782.902344-3.996094 2.460938-5.328125l45.296874-38.570313c2.941407-2.507812 7.359376-2.152344 9.867188.789063 2.503906 2.945312 2.152344 7.363281-.792969 9.867187l-39.035156 33.242188 39.035156 33.242187c2.945313 2.507813 3.296875 6.925781.792969 9.867188-1.386719 1.628906-3.355469 2.464843-5.335938 2.464843zm0 0"/><path d="m256.710938 272.132812c-1.980469 0-3.949219-.835937-5.332032-2.464843-2.507812-2.941407-2.152344-7.359375.789063-9.867188l39.035156-33.242187-39.035156-33.242188c-2.941407-2.503906-3.296875-6.921875-.789063-9.867187 2.503906-2.941407 6.925782-3.296875 9.863282-.789063l45.296874 38.570313c1.5625 1.332031 2.460938 3.277343 2.460938 5.328125 0 2.054687-.898438 4-2.460938 5.332031l-45.296874 38.570313c-1.316407 1.121093-2.929688 1.671874-4.53125 1.671874zm0 0"/><path d="m195.964844 301.0625c-.480469 0-.964844-.050781-1.453125-.152344-3.78125-.796875-6.203125-4.511718-5.40625-8.292968l28.230469-134.035157c.796874-3.78125 4.507812-6.203125 8.292968-5.40625 3.78125.796875 6.203125 4.507813 5.40625 8.292969l-28.230468 134.035156c-.695313 3.296875-3.601563 5.558594-6.839844 5.558594zm0 0"/><path d="m377 374.085938h-330c-25.914062 0-47-21.082032-47-47v-280.085938c0-25.914062 21.085938-47 47-47h330c25.914062 0 47 21.085938 47 47v280.085938c0 25.917968-21.085938 47-47 47zm-330-360.085938c-18.195312 0-33 14.804688-33 33v280.085938c0 18.195312 14.804688 33 33 33h330c18.195312 0 33-14.804688 33-33v-280.085938c0-18.195312-14.804688-33-33-33zm0 0"/><path d="m417 112.089844h-410c-3.867188 0-7-3.132813-7-7 0-3.863282 3.132812-7 7-7h410c3.867188 0 7 3.136718 7 7 0 3.867187-3.132812 7-7 7zm0 0"/><path d="m119.601562 78.59375c-12.210937 0-22.152343-9.941406-22.152343-22.152344 0-12.214844 9.941406-22.152344 22.152343-22.152344 12.214844 0 22.152344 9.9375 22.152344 22.152344 0 12.210938-9.9375 22.152344-22.152344 22.152344zm0-30.304688c-4.492187 0-8.152343 3.65625-8.152343 8.152344s3.660156 8.152344 8.152343 8.152344c4.496094 0 8.152344-3.65625 8.152344-8.152344s-3.65625-8.152344-8.152344-8.152344zm0 0"/><path d="m51.539062 78.378906c-12.214843 0-22.152343-9.9375-22.152343-22.152344 0-12.214843 9.9375-22.152343 22.152343-22.152343 12.214844 0 22.152344 9.9375 22.152344 22.152343 0 12.214844-9.9375 22.152344-22.152344 22.152344zm0-30.304687c-4.492187 0-8.152343 3.660156-8.152343 8.152343 0 4.496094 3.660156 8.152344 8.152343 8.152344 4.496094 0 8.152344-3.65625 8.152344-8.152344 0-4.492187-3.65625-8.152343-8.152344-8.152343zm0 0"/><path d="m187.664062 78.804688c-12.210937 0-22.148437-9.9375-22.148437-22.152344 0-12.210938 9.9375-22.148438 22.148437-22.148438 12.214844 0 22.152344 9.9375 22.152344 22.148438 0 12.214844-9.9375 22.152344-22.152344 22.152344zm0-30.304688c-4.492187 0-8.148437 3.65625-8.148437 8.152344s3.65625 8.152344 8.148437 8.152344c4.496094 0 8.152344-3.65625 8.152344-8.152344s-3.65625-8.152344-8.152344-8.152344zm0 0"/></svg>;
-const CLOUD = <svg style={{height: '100px', width: '100px'}}  id="Layer_1" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m103.246 387.843c0-4.142-3.358-7.5-7.5-7.5-44.524 0-80.746-36.196-80.746-80.686 0-31.561 18.583-60.404 47.341-73.481 3.771-1.714 5.438-6.161 3.723-9.932-1.714-3.771-6.162-5.438-9.932-3.723-34.099 15.506-56.132 49.708-56.132 87.136 0 52.761 42.951 95.686 95.746 95.686 4.142 0 7.5-3.358 7.5-7.5z"/><path d="m157.051 231.168c10.814-60.393 63.302-104.226 124.804-104.226 47.031 0 89.967 25.807 112.051 67.351 1.945 3.657 6.485 5.046 10.143 3.102 3.657-1.944 5.046-6.485 3.102-10.143-4.2-7.901-9.075-15.293-14.532-22.12v-99.975l18.144-21.62c2.454.92 5.109 1.423 7.881 1.423 12.407 0 22.5-10.084 22.5-22.48s-10.094-22.48-22.5-22.48-22.5 10.084-22.5 22.48c0 4.166 1.14 8.071 3.125 11.419l-19.895 23.706c-1.133 1.351-1.755 3.058-1.755 4.821v86.662c-13.168-12.056-28.489-21.503-45.151-27.853v-52.348c8.73-3.093 15-11.427 15-21.196 0-12.396-10.093-22.48-22.5-22.48s-22.5 10.084-22.5 22.48c0 9.769 6.27 18.103 15 21.196v47.57c-11.469-2.963-23.418-4.515-35.613-4.515-6.209 0-12.337.4-18.355 1.177v-69.443c8.73-3.093 15-11.427 15-21.196 0-12.396-10.093-22.48-22.5-22.48s-22.5 10.084-22.5 22.48c0 9.769 6.27 18.103 15 21.196v72.205c-19.889 4.781-38.237 13.754-53.968 26.019v-73.013c8.73-3.093 15-11.427 15-21.196 0-12.396-10.093-22.48-22.5-22.48s-22.5 10.084-22.5 22.48c0 9.769 6.27 18.103 15 21.196v86.53c-16.346 16.99-28.536 38.15-34.799 62-3.503-2.096-7.118-3.954-10.828-5.57v-149.42c0-1.764-.622-3.471-1.755-4.821l-19.894-23.706c1.985-3.349 3.125-7.254 3.125-11.42 0-12.396-10.093-22.48-22.5-22.48s-22.5 10.084-22.5 22.48 10.093 22.48 22.5 22.48c2.771 0 5.427-.503 7.88-1.423l18.144 21.62v141.61c-7.488-1.851-15.245-2.795-23.16-2.795-4.142 0-7.5 3.358-7.5 7.5s3.358 7.5 7.5 7.5c18.041 0 35.101 5.813 49.337 16.81 1.333 1.03 2.951 1.565 4.586 1.565.909 0 1.823-.165 2.697-.502 2.447-.944 4.223-3.096 4.686-5.677zm261.593-216.168c4.136 0 7.5 3.355 7.5 7.48s-3.364 7.48-7.5 7.48-7.5-3.355-7.5-7.48 3.364-7.48 7.5-7.48zm-93.676 25.21c4.136 0 7.5 3.356 7.5 7.48s-3.364 7.48-7.5 7.48-7.5-3.355-7.5-7.48 3.364-7.48 7.5-7.48zm-68.968-25.21c4.136 0 7.5 3.355 7.5 7.48s-3.364 7.48-7.5 7.48-7.5-3.355-7.5-7.48 3.364-7.48 7.5-7.48zm-68.968 25.21c4.136 0 7.5 3.356 7.5 7.48s-3.364 7.48-7.5 7.48-7.5-3.355-7.5-7.48 3.364-7.48 7.5-7.48zm-101.651-17.73c0-4.125 3.364-7.48 7.5-7.48s7.5 3.355 7.5 7.48-3.364 7.48-7.5 7.48-7.5-3.356-7.5-7.48z"/><path d="m439.769 250.967c-5.475 0-10.867.605-16.125 1.805-.063-10.444-1.27-20.849-3.586-30.941-.927-4.038-4.952-6.559-8.988-5.632-4.037.927-6.559 4.951-5.632 8.988 2.129 9.273 3.208 18.848 3.208 28.456 0 2.931-.104 5.919-.309 8.88-.178 2.572.978 5.056 3.061 6.576 2.083 1.521 4.801 1.863 7.196.91 6.733-2.681 13.857-4.041 21.174-4.041 31.558 0 57.231 25.654 57.231 57.188s-25.674 57.188-57.231 57.188h-24.596c-4.142 0-7.5 3.358-7.5 7.5s3.358 7.5 7.5 7.5h24.596c39.829 0 72.231-32.383 72.231-72.188.001-39.805-32.402-72.189-72.23-72.189z"/><path d="m355.522 380.343h-69.507c-4.142 0-7.5 3.358-7.5 7.5s3.358 7.5 7.5 7.5h31.453v72.981c-8.73 3.093-15 11.427-15 21.196 0 12.396 10.093 22.48 22.5 22.48s22.5-10.084 22.5-22.48c0-9.77-6.27-18.104-15-21.196v-72.981h23.054c4.142 0 7.5-3.358 7.5-7.5s-3.358-7.5-7.5-7.5zm-30.554 116.657c-4.136 0-7.5-3.355-7.5-7.48s3.364-7.48 7.5-7.48 7.5 3.356 7.5 7.48-3.364 7.48-7.5 7.48z"/><path d="m225.962 380.343h-68.294c-4.142 0-7.5 3.358-7.5 7.5s3.358 7.5 7.5 7.5h21.864v72.981c-8.73 3.093-15 11.427-15 21.196 0 12.396 10.093 22.48 22.5 22.48s22.5-10.084 22.5-22.48c0-9.77-6.27-18.104-15-21.196v-72.981h31.43c4.142 0 7.5-3.358 7.5-7.5s-3.358-7.5-7.5-7.5zm-38.93 116.657c-4.136 0-7.5-3.355-7.5-7.48s3.364-7.48 7.5-7.48 7.5 3.356 7.5 7.48-3.364 7.48-7.5 7.48z"/><path d="m126.881 315.637c-12.407 0-22.5 10.084-22.5 22.48 0 9.769 6.27 18.103 15 21.196v102.51l-31.77 37.855c-2.663 3.173-2.249 7.903.924 10.566 1.405 1.179 3.116 1.755 4.817 1.755 2.14 0 4.266-.911 5.749-2.679l33.525-39.947c1.133-1.351 1.755-3.058 1.755-4.821v-105.24c8.73-3.093 15-11.427 15-21.196 0-12.395-10.093-22.479-22.5-22.479zm0 29.96c-4.136 0-7.5-3.355-7.5-7.48s3.364-7.48 7.5-7.48 7.5 3.356 7.5 7.48-3.364 7.48-7.5 7.48z"/><path d="m256 315.637c-12.407 0-22.5 10.084-22.5 22.48 0 9.769 6.27 18.103 15 21.196v145.187c0 4.142 3.358 7.5 7.5 7.5s7.5-3.358 7.5-7.5v-145.187c8.73-3.093 15-11.427 15-21.196 0-12.396-10.093-22.48-22.5-22.48zm0 29.96c-4.136 0-7.5-3.355-7.5-7.48s3.364-7.48 7.5-7.48 7.5 3.356 7.5 7.48-3.364 7.48-7.5 7.48z"/><path d="m392.619 461.823v-102.51c8.73-3.093 15-11.427 15-21.196 0-12.396-10.093-22.48-22.5-22.48s-22.5 10.084-22.5 22.48c0 9.769 6.27 18.103 15 21.196v105.24c0 1.764.622 3.471 1.755 4.821l33.525 39.947c1.484 1.768 3.609 2.679 5.749 2.679 1.701 0 3.412-.576 4.817-1.755 3.173-2.663 3.586-7.394.924-10.566zm-7.5-131.186c4.136 0 7.5 3.356 7.5 7.48s-3.364 7.48-7.5 7.48-7.5-3.355-7.5-7.48 3.364-7.48 7.5-7.48z"/></g></svg>;
-const DESIGN = <svg style={{height: '100px', width: '100px'}} id="Layer_1" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m125.533 372.73a6 6 0 1 0 -8.484 8.486l14.821 14.821a6 6 0 1 0 8.484-8.486z"/><path d="m128.675 241.7a6 6 0 0 0 8.484-8.485l-63.036-63.036 20.662-20.433 17.063 17.063 77.822 77.822-123.2 123.2a16 16 0 0 0 0 22.628l56.15 56.15a16.02 16.02 0 0 0 22.627 0l123.2-123.2 88.818 88.818a5.933 5.933 0 0 0 .83.678c.081.057.163.11.247.162a5.957 5.957 0 0 0 .806.425c.043.018.084.043.128.061a6.09 6.09 0 0 0 .8.257l64.1 15.793a6 6 0 0 0 7.261-7.261l-15.794-64.1a6.042 6.042 0 0 0 -.257-.8c-.018-.044-.043-.085-.062-.129a6 6 0 0 0 -.424-.805c-.052-.084-.106-.166-.163-.248a5.965 5.965 0 0 0 -.678-.83l-88.817-88.817 122.458-122.449a16 16 0 0 0 0-22.628l-56.15-56.151a16.019 16.019 0 0 0 -22.627 0l-32.188 32.187-90.267 90.268-99.037-99.04a6 6 0 0 0 -8.485 0l-2.936 2.936-8.126-8.262a29.823 29.823 0 0 0 -21.4-8.976h-.022a30.042 30.042 0 0 0 -21.241 51.285l8.319 8.317-32.14 31.789a6 6 0 0 0 -.024 8.509zm272.66 117.978-39.824 39.822-236.934-236.932 39.823-39.824zm-264.57 78.451a4.008 4.008 0 0 1 -5.659 0l-56.15-56.15a4 4 0 0 1 0-5.657l83.967-83.967 26.8 26.8a6 6 0 1 0 8.484-8.486l-26.8-26.8 30.751-30.75 61.808 61.807zm236.511-33.423 33.264-33.263 10.875 44.138zm-92.984-233.72 26.8 26.8a6 6 0 1 0 8.484-8.486l-26.8-26.8 52.2-52.2 15.861 15.861a6 6 0 1 0 8.484-8.485l-15.861-15.859 27.946-27.946a4.007 4.007 0 0 1 5.658 0l56.151 56.15a4.006 4.006 0 0 1 0 5.657l-122.454 122.455-61.808-61.808zm-124.376-56.727-39.824 39.824-12.728-12.728 39.824-39.824zm-62.207 3.041a18.042 18.042 0 0 1 12.757-30.8h.013a17.911 17.911 0 0 1 12.85 5.391l8.2 8.332-24.329 24.324-1.13 1.117z"/></svg>;
-
-const data = [
-  {
-    text: 'Javascript, React, Typescript',
-    heading: 'Web development',
-    icon: WEB
-  },
-  {
-    text: 'AWS',
-    heading: 'Cloud',
-    icon: CLOUD
-  },
-  {
-    text: '',
-    heading: 'Design',
-    icon: DESIGN
-  },
-  {
-    text: '',
-    heading: '',
-    icon: CLOUD 
-  }
-]
+`;
 
 const pageStyles = {
   color: "#232129",
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
+};
 const headingStyles = {
   marginTop: 0,
-  marginBottom: 64,
   maxWidth: 320,
-}
+};
 const headingAccentStyles = {
   color: "#663399",
-}
+};
 
-const Section = styled.div<{flat?: boolean, color?: string}>`
-
-  background-color: ${props => props.color ? props.color : '#ffeaf0'};
-  padding: 20px;
+const Section = styled.div<{ flat?: boolean; color?: string }>`
+  background-color: ${(props) => (props.color ? props.color : "#ffeaf0")};
+  padding: 20px 20px 50px;
   position: relative;
   z-index: 1;
   box-sizing: border-box;
@@ -76,93 +51,160 @@ const Section = styled.div<{flat?: boolean, color?: string}>`
 
   &:before {
     content: "";
-    background-color: ${props => props.color ? props.color : '#ffeaf0'};
+    background-color: ${(props) => (props.color ? props.color : "#ffeaf0")};
     height: 70px;
-    transform: ${props => props.flat ? '' : 'skewY(-2deg)'};
+    transform: ${(props) => (props.flat ? "" : "skewY(-2deg)")};
     position: absolute;
     left: 0;
     right: 0;
     z-index: -1;
-    top: -30px;    
+    top: -30px;
   }
-`
+`;
 
 const Header = styled.div`
+  max-height: 340px;
   display: flex;
   margin: 30px;
   flex-direction: column;
   align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    margin: 30px 250px 45px;
+    width: 845px;
+  }
+`;
+
+const Navbar = styled.nav`
+  margin-bottom: 30px;
+  display: flex;
+  text-transform: uppercase;
+
   @media (min-width: 768px) {
     flex-direction: row;
     margin: 40px 250px;
   }
+
+  ul {
+    display: flex;
+  }
+  li {
+    margin-right: 15px;
+    list-style: none;
+  }
 `;
 
-const IndexPage = () => {
+const IndexPage = ({ data }) => {
+  console.log(data.dataJson.data);
   return (
-    
     <main style={pageStyles}>
-      <GlobalStyle/>
+      <GlobalStyle />
       <title>Welcome to my CV</title>
-      <Header>
 
+      <Header>
         <Avatar
-          avatarStyle='Circle'
-          topType='LongHairStraight'
-          accessoriesType='Blank'
-          hairColor='Black'
-          facialHairType='Blank'
-          clotheType='CollarSweater'
-          clotheColor='Gray01'
-          eyeType='Happy'
-          eyebrowType='Default'
-          mouthType='Smile'
-          skinColor='Light'
-          />
+          avatarStyle="Circle"
+          topType="LongHairStraight"
+          accessoriesType="Blank"
+          hairColor="Black"
+          facialHairType="Blank"
+          clotheType="CollarSweater"
+          clotheColor="Gray01"
+          eyeType="Happy"
+          eyebrowType="Default"
+          mouthType="Smile"
+          skinColor="Light"
+          style={{ height: "100%" }}
+        />
         <h1 style={headingStyles}>
           Hi there!
-        <br />
-          <span style={headingAccentStyles}>— Welcome to my page! </span>
-          <span role="img" aria-label="Party popper emojis">
+          <br />
+          <span style={headingAccentStyles}>
+            — I'm Fanny. Welcome to my page!{" "}
+          </span>
+          <span role="img" aria-label="Hand waving emoji">
             👋
-        </span>
+          </span>
         </h1>
-
       </Header>
-      <Section flat>
-        <h2 style={{ color: 'black', fontWeight: 300 }}>About me</h2>
-        <p style={{ color: '#3a3333', maxWidth: '700px' }}>
-          My name is Fanny and this is my online cv.
-          It is a small project where I'm testing out Gatsby.
-          I'm currently located in Stockholm and working as an IT consultant at Byteslice.
-          I work with AWS and I have a big interest in UX and front-end development.
+      {/* <Navbar>
+          <ul>
+            <li><a>
+
+              Home
+            </a>
+            </li>
+            <Link
+                to={`/projects/`}
+              >
+                About
+              </Link>
+            <li>
+              BYE
+            </li>
+          </ul>
         
+      </Navbar> */}
+
+      <Section flat>
+        <h2 style={{ color: "black", fontWeight: 300 }}>About me</h2>
+
+        <p style={{ color: "#3a3333", maxWidth: "700px" }}>
+          My name is Fanny and this is my online cv. It is a small project where
+          I'm testing out Gatsby. It will probably be constanstly WIP and I will
+          add more things to it as I feel for it.
         </p>
         <p>
-
-        Like the looks of my page?
-        I designed the entire page on my own. I enjoy doing UX and thinks userbility is a huge part of the development process.
+          I'm currently located in Stockholm and working as an IT consultant at
+          Byteslice. I work with web development and likes to make nice and
+          good-looking web applications. Other stuff I like is deploying things
+          to AWS and I have a big interest in UX.
         </p>
+
+        <p>You can also find me here:</p>
+
+        <a href="https://github.com/fannychan/">
+          <img src={Github} style={{ height: "45px", marginRight: "10px" }} />
+        </a>
+        <a href="https://www.linkedin.com/in/fanny-chan/">
+          <img src={Linkedin} style={{ height: "45px",  marginRight: "10px"  }} />
+        </a>
+        <a style={{ color: "#663399" }} href="mailto:fanny@byteslice.se">
+          <img src={Email} style={{ height: "45px" }} />
+        </a>
       </Section>
 
-      <Section color='#001535'>
-        <h2 style={{color: 'white'}}>Skills</h2>
-
-        <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', maxWidth: '700px'}}>
-
-        {
-          data.map(item => {
-            return <SkillBlock key={item.heading} {...item}></SkillBlock>
-          })
-        }
-        </div>
+      <Section color="#253d61">
+        <h2 style={{ color: "#d2d2d2" }}>Skills</h2>
+        <SkillBlock />
       </Section>
 
-      <Section flat color='white'>
+      {/* <Section flat color="white">
         <h2>Previous projects</h2>
-      </Section>
-    </main>
-  )
-}
 
-export default IndexPage
+        <Project
+          {...{
+            title: "Previous online cv",
+            description: "Old but gold",
+            image: "",
+          }}
+        ></Project>
+      </Section> */}
+    </main>
+  );
+};
+
+export default IndexPage;
+
+export const query = graphql`
+  query {
+    dataJson {
+      data {
+        heading
+        icon
+        text
+      }
+    }
+  }
+`;
