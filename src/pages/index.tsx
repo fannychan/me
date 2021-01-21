@@ -1,12 +1,11 @@
-import * as React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Avatar from "avataaars";
-import { SkillBlock } from "../components/SkillBlock";
 import { createGlobalStyle } from "styled-components";
-import Github from "../images/github.svg";
-import Email from "../images/email.svg";
-import Linkedin from "../images/linkedin.svg";
+
 import { Link, useStaticQuery, graphql } from "gatsby";
+import { Home } from "../views/Home";
+import { KnowMePage } from "../views/GetToKnowMe";
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -37,31 +36,6 @@ const headingAccentStyles = {
   color: "#663399",
 };
 
-const Section = styled.div<{ flat?: boolean; color?: string }>`
-  background-color: ${(props) => (props.color ? props.color : "#ffeaf0")};
-  padding: 20px 20px 50px;
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-  width: 100%;
-
-  @media (min-width: 768px) {
-    padding: 30px 250px 100px;
-  }
-
-  &:before {
-    content: "";
-    background-color: ${(props) => (props.color ? props.color : "#ffeaf0")};
-    height: 70px;
-    transform: ${(props) => (props.flat ? "" : "skewY(-2deg)")};
-    position: absolute;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    top: -30px;
-  }
-`;
-
 const Header = styled.div`
   max-height: 340px;
   display: flex;
@@ -76,27 +50,39 @@ const Header = styled.div`
   }
 `;
 
-const Navbar = styled.nav`
+const Menu = styled.div`
   margin-bottom: 30px;
   display: flex;
   text-transform: uppercase;
+  padding: 10px;
 
   @media (min-width: 768px) {
+    padding: 0;
     flex-direction: row;
     margin: 40px 250px;
   }
+`;
 
-  ul {
-    display: flex;
-  }
-  li {
-    margin-right: 15px;
-    list-style: none;
+const StyledTabButton = styled.button<{ active?: boolean }>`
+  border: none;
+  text-transform: uppercase;
+  background: white;
+  padding-bottom: 5px;
+  border-bottom: ${(props) =>
+    props.active ? "3px solid #253d61" : "3px solid white"};
+  font-size: 1rem;
+  letter-spacing: 0.09rem;
+  margin-right: 15px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
   }
 `;
 
 const IndexPage = ({ data }) => {
-  console.log(data.dataJson.data);
+  const [currentView, setCurrentView] = useState("home");
+  //console.log(data.dataJson.data);
   return (
     <main style={pageStyles}>
       <GlobalStyle />
@@ -128,69 +114,23 @@ const IndexPage = ({ data }) => {
           </span>
         </h1>
       </Header>
-      {/* <Navbar>
-          <ul>
-            <li><a>
+      <Menu>
+        <StyledTabButton
+          active={currentView === "home"}
+          onClick={() => setCurrentView("home")}
+        >
+          About
+        </StyledTabButton>
 
-              Home
-            </a>
-            </li>
-            <Link
-                to={`/projects/`}
-              >
-                About
-              </Link>
-            <li>
-              BYE
-            </li>
-          </ul>
-        
-      </Navbar> */}
-
-      <Section flat>
-        <h2 style={{ color: "black", fontWeight: 300 }}>About me</h2>
-
-        <p style={{ color: "#3a3333", maxWidth: "700px" }}>
-          My name is Fanny and this is my online cv. It is a small project where
-          I'm testing out Gatsby. It will probably be constanstly WIP and I will
-          add more things to it as I feel for it.
-        </p>
-        <p>
-          I'm currently located in Stockholm and working as an IT consultant at
-          Byteslice. I work with web development and likes to make nice and
-          good-looking web applications. Other stuff I like is deploying things
-          to AWS and I have a big interest in UX.
-        </p>
-
-        <p>You can also find me here:</p>
-
-        <a href="https://github.com/fannychan/">
-          <img src={Github} style={{ height: "45px", marginRight: "10px" }} />
-        </a>
-        <a href="https://www.linkedin.com/in/fanny-chan/">
-          <img src={Linkedin} style={{ height: "45px",  marginRight: "10px"  }} />
-        </a>
-        <a style={{ color: "#663399" }} href="mailto:fanny@byteslice.se">
-          <img src={Email} style={{ height: "45px" }} />
-        </a>
-      </Section>
-
-      <Section color="#253d61">
-        <h2 style={{ color: "#d2d2d2" }}>Skills</h2>
-        <SkillBlock />
-      </Section>
-
-      {/* <Section flat color="white">
-        <h2>Previous projects</h2>
-
-        <Project
-          {...{
-            title: "Previous online cv",
-            description: "Old but gold",
-            image: "",
-          }}
-        ></Project>
-      </Section> */}
+        <StyledTabButton
+          active={currentView === "get-to-know-me"}
+          onClick={() => setCurrentView("get-to-know-me")}
+        >
+          Get to know me
+        </StyledTabButton>
+      </Menu>
+      {(currentView === "home" && <Home />) ||
+        (currentView === "get-to-know-me" && <KnowMePage />)}
     </main>
   );
 };

@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/me",
   siteMetadata: {
     title: "gatsby-cv",
   },

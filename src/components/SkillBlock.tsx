@@ -67,7 +67,7 @@ const BACKEND = (
   <svg
     style={{ height: "60px", width: "60px" }}
     id="Layer_5"
-    enable-background="new 0 0 64 64"
+    // enable-background="new 0 0 64 64"
     height="512"
     viewBox="0 0 64 64"
     width="512"
@@ -142,6 +142,7 @@ export const SkillBlock = () => {
       {data.map(({ icon, heading, text }) => {
         return (
           <div
+            key={heading}
             style={{
               color: "#d2d2d2",
               display: "flex",
